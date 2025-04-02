@@ -52,5 +52,28 @@ emps = emps.set_index("Empno")
 
 emps_salary = emps.join(salary, how='inner')
 
-print(emps_salary)
+# print(emps_salary)
 
+data = [
+    [2608, 9001, 35],
+    [2617, 9001, 35],
+    [2620, 9001, 139],
+    [2621, 9002, 95],
+    [2626, 9002, 218],
+]
+
+orders = pd.DataFrame(data, columns=["Pono", "Empno", "Total"])
+
+emps_orders = emps.merge(
+    orders, how="inner", left_on="Empno", right_on="Empno"
+).set_index("Pono")
+
+#print(orders.groupby(["Empno"])["Total"].sum()) #mean media
+
+#emptotal = (emps_orders.groupby(["Empno"])["Total"].sum()).join(emps)
+#print(emptotal)
+
+total = orders.groupby(["Empno"])["Total"].sum()
+emps_total = emps.join(total, how="inner")
+
+#print(emps_total)
